@@ -9,15 +9,15 @@ class SVG {
     }
 
     render() {
-        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement}${this.textElement}</svg>`
+        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200" >${this.shapeElement}${this.textElement}</svg>`
     }
 
     setTextElement(text,color) {
-        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
+        this.textElement = `<text x="150" y="125" font-size="50" text-anchor="middle" fill="${color}">${text}</text>`
     }
 
     setShapeElement(shape) {
-        this.setShapeElement = shape.render()
+        this.shapeElement = shape.render()
     }
 }
 
@@ -34,12 +34,12 @@ const questions = [
     },
     {
         type: "input",
-        name: "shape",
+        name: "shape-color",
         message: "Enter A Color, Color Keyword or Hexadecimal Number For The Shape Color:",
     },
     {
         type: "list",
-        name: "pixel-image",
+        name: "shape",
         message: "Choose which Pixel Image you would like?",
         choices: ["Triangle", "Circle", "Square"],
     }
@@ -50,7 +50,7 @@ function writeToFile(fileName, data) {
         if (err) {
             return console.log(err);
         }
-        console.log("SVG Logo generated");
+        console.log("logo.svg Generated");
     });
 }
 
@@ -70,9 +70,9 @@ async function init() {
 
     userFontColor = answers["text-color"]
 
-    userShapeColor = answers.shape
+    userShapeColor = answers["shape-color"]
 
-    userShapeType = answers["pixel-image"]
+    userShapeType = answers["shape"]
 
     let userShape
         if (userShapeType === "Triangle" || userShapeType === "triangle") {
