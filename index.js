@@ -13,7 +13,7 @@ class SVG {
     }
 
     setTextElement(text,color) {
-        this.textElement = `<text x="150" y="125" font-size="50" text-anchor="middle" fill="${color}">${text}</text>`
+        this.textElement = `<text x="150" y="115" font-size="50" text-anchor="middle" fill="${color}">${text}</text>`
     }
 
     setShapeElement(shape) {
