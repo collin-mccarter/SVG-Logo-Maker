@@ -1,7 +1,9 @@
+// Imports inquirer, and shapes
 const fs = require("fs")
 const inquirer = require("inquirer")
 const {Triangle, Circle, Square} = require("./lib/shapes.js")
 
+// setting up a constructor for rendering the shape and text in a SVG string
 class SVG {
     constructor() {
         this.textElement = ""
@@ -13,7 +15,7 @@ class SVG {
     }
 
     setTextElement(text,color) {
-        this.textElement = `<text x="150" y="115" font-size="50" text-anchor="middle" fill="${color}">${text}</text>`
+        this.textElement = `<text x="150" y="115" font-size="40" text-anchor="middle" fill="${color}">${text}</text>`
     }
 
     setShapeElement(shape) {
@@ -21,6 +23,7 @@ class SVG {
     }
 }
 
+// questions to ask to get input for design
 const questions = [
     {
         type: "input",
@@ -45,6 +48,7 @@ const questions = [
     }
 ]
 
+// function to writetofile the data collected
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, function (err) {
         if (err) {
@@ -54,12 +58,15 @@ function writeToFile(fileName, data) {
     });
 }
 
+// init function
 async function init() {
     var svgString = ""
     var svgFile = "logo.svg"
 
+    // starts questions with prompts
     const answers = await inquirer.prompt(questions)
     
+    // checking text input length
     var userText = ""
     if (answers.text.length > 0 && answers.text.length < 4) {
         userText = answers.text
@@ -68,12 +75,16 @@ async function init() {
         return
     }
 
+    // setting font color
     userFontColor = answers["text-color"]
 
+    // setting shape color
     userShapeColor = answers["shape-color"]
 
+    // setting picked shape
     userShapeType = answers["shape"]
 
+    // creating logic for shape picked
     let userShape
         if (userShapeType === "Triangle" || userShapeType === "triangle") {
             userShape = new Triangle();
@@ -82,8 +93,11 @@ async function init() {
         } else if (userShapeType === "Square" || userShapeType === "square") {
             userShape = new Square();
         }
-    userShape.setColor(userShapeColor)
 
+    // setting shape color and set shape 
+    userShape.setColor(userShapeColor)
+    
+    // making a new svg so text and shape can be added
     var svg = new SVG();
 
     svg.setTextElement(userText, userFontColor)
